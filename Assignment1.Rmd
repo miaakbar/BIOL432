@@ -1,0 +1,73 @@
+---
+title: "BIOL432 Assignment 1"
+author: "Mia Akar"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+# Setup
+
+```{r setup, include=FALSE}
+getwd()
+setwd("./")
+library(dplyr)
+library(ggplot2)
+```
+
+
+# Load data
+
+```{r}
+source('dataGenerato.R')
+```
+
+# Load volume data
+
+```{r}
+source('volumeEstimato.R')
+```
+
+# read in revised measurements csv
+
+```{r}
+dat <- read.csv("./measurements.csv")
+```
+
+# 2. use dplyr to sort 
+
+```{r}
+datsorted <- dat %>%
+  arrange(Species, Observer, volume)
+head(datsorted)
+```
+
+# 3. create a table for volume means
+
+```{r}
+volmean <- datsorted %>%
+  group_by(Species) %>%
+  summarise(VolumeMean = mean(volume))
+volmean
+```
+
+# 4. create a table showing number of observations 
+
+```{r}
+observe <- datsorted %>%
+  group_by(Species, Observer) %>%
+  summarise(Count = length(volume))
+observe
+```
+
+# 5. create a box plot 
+
+```{r}
+ggplot(dat, aes(x=Species, y= volume, group=Species, fill=Species)) + geom_boxplot()
+```
+
+# 6. create a multi-panel plot
+
+```{r}
+
+```
+
